@@ -1,0 +1,393 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"><title>宠寻 · AI 寻宠作战指挥中心</title><style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-tap-highlight-color:transparent}
+:root{--p:#ff6b35;--pd:#e55a2b;--pl:#fff0e8;--g:#f59e0b;--d:#6366f1;--s:#10b981;--da:#ef4444;--bg:#f0f2f5;--c:#fff;--t:#1e293b;--t2:#64748b;--b:#e2e8f0;--r:12px;--sh:0 2px 12px rgba(0,0,0,.08)}
+body{background:var(--bg);color:var(--t);min-height:100vh;padding-bottom:0;overflow-x:hidden}
+.topbar{background:linear-gradient(135deg,var(--p),#e84315);color:#fff;padding:0;position:sticky;top:0;z-index:100}
+.topbar-main{display:flex;align-items:center;padding:12px 16px;gap:10px}
+.topbar .logo{font-size:20px;font-weight:800;letter-spacing:1px}.topbar .logo span{opacity:.8;font-weight:400}
+.topbar .badge{background:rgba(255,255,255,.2);padding:2px 10px;border-radius:10px;font-size:11px;margin-left:8px}
+.topbar .stats-row{display:flex;gap:0;padding:0 16px 10px;font-size:12px;overflow-x:auto}
+.topbar .stat-item{flex:1;min-width:80px;text-align:center;padding:4px 8px;background:rgba(255,255,255,.1);border-radius:6px;margin-right:6px}
+.topbar .stat-item .num{font-size:18px;font-weight:700}.topbar .stat-item .lbl{opacity:.8;font-size:10px}
+.alert-banner{background:linear-gradient(90deg,#fef2f2,#fff5f5);border-bottom:1px solid #fecaca;padding:10px 16px;display:flex;align-items:center;gap:8px;font-size:13px;color:#991b1b}
+.alert-banner .pulse{width:8px;height:8px;background:var(--da);border-radius:50%;animation:alertPulse 1.5s infinite}
+@keyframes alertPulse{0%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}100%{opacity:1;transform:scale(1)}}
+.alert-banner .btn-sm{background:#991b1b;color:#fff;border:none;padding:4px 12px;border-radius:4px;cursor:pointer;font-size:11px;margin-left:auto}
+.nav-tabs{display:flex;background:var(--c);border-bottom:1px solid var(--b);position:sticky;top:100px;z-index:50;overflow-x:auto}
+.nav-tabs .tab{padding:10px 12px;font-size:12px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;color:var(--t2);transition:.2s;flex:1;text-align:center;background:none;border-top:none;border-left:none;border-right:none}
+.nav-tabs .tab.active{color:var(--p);border-bottom-color:var(--p);font-weight:600}
+.nav-tabs .tab .icon{display:block;font-size:16px;margin-bottom:1px}
+.page{display:none;padding:12px 14px;animation:fadeIn .3s ease}max-width:600px;margin:0 auto}.page.active{display:block}
+.card{background:var(--c);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:10px;overflow:hidden}
+.card-header{padding:12px 14px 8px;font-size:14px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.card-body{padding:0 14px 12px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px 0}
+.stat-card{text-align:center;padding:8px 4px;border-radius:8px;background:var(--pl)}
+.stat-card .num{font-size:22px;font-weight:800;color:var(--p)}.stat-card .lbl{font-size:10px;color:var(--t2)}
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.qa-btn{background:var(--c);border:1px solid var(--b);border-radius:var(--r);padding:12px 8px;cursor:pointer;text-align:center;transition:.2s;font-size:12px;color:var(--t)}
+.qa-btn:hover{border-color:var(--p);background:var(--pl)}
+.qa-btn .icon{font-size:24px;display:block;margin-bottom:4px}.qa-btn .label{font-weight:600}.qa-btn .desc{font-size:10px;color:var(--t2);margin-top:2px}
+.match-card{background:var(--c);border-radius:var(--r);padding:12px;margin-bottom:8px;border-left:3px solid var(--s);box-shadow:var(--sh)}
+.match-card.high{border-left-color:var(--s)}.match-card.medium{border-left-color:var(--g)}.match-card.low{border-left-color:var(--t2)}
+.match-card .top-row{display:flex;justify-content:space-between;align-items:center}
+.match-card .confidence{font-size:20px;font-weight:800}.match-card .confidence.high{color:var(--s)}.match-card .confidence.medium{color:var(--g)}.match-card .confidence.low{color:var(--t2)}
+.match-card .match-detail{font-size:12px;color:var(--t2);margin:4px 0}
+.confidence-bar{height:6px;background:var(--b);border-radius:3px;margin:6px 0;overflow:hidden}
+.confidence-bar .fill{height:100%;border-radius:3px;transition:width 1s ease}.confidence-bar .fill.high{background:var(--s)}.confidence-bar .fill.medium{background:var(--g)}.confidence-bar .fill.low{background:var(--da)}
+.timeline{position:relative;padding-left:24px}
+.timeline:before{content:"";position:absolute;left:8px;top:4px;bottom:4px;width:2px;background:var(--b)}
+.tl-item{position:relative;padding:0 0 14px 12px;font-size:13px}
+.tl-item:before{content:"";position:absolute;left:-20px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--p);border:2px solid var(--c);box-shadow:0 0 0 2px var(--p)}
+.tl-item .tl-time{font-size:11px;color:var(--t2)}.tl-item .tl-title{font-weight:600}.tl-item .tl-desc{color:var(--t2);font-size:12px}
+.tl-item.done:before{background:var(--s);box-shadow:0 0 0 2px var(--s)}.tl-item.alert:before{background:var(--da);box-shadow:0 0 0 2px var(--da);animation:alertPulse 2s infinite}
+.map-container{background:#e8f4f8;border-radius:var(--r);height:240px;position:relative;overflow:hidden;margin:8px 0}
+.map-container .grid{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,1fr);height:100%;gap:1px;padding:4px}
+.map-container .zone{background:rgba(255,255,255,.5);border-radius:2px;font-size:8px;display:flex;align-items:center;justify-content:center;color:var(--t2);cursor:pointer;transition:.2s;position:relative}
+.map-container .zone:hover{background:rgba(255,107,53,.2)}
+.map-container .zone.marked{background:rgba(255,107,53,.4)}
+.map-container .zone.searched{background:rgba(16,185,129,.3)}
+.map-container .pin{position:absolute;font-size:20px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));transition:.3s}
+.map-legend{display:flex;gap:12px;font-size:11px;color:var(--t2);margin:6px 0 0;flex-wrap:wrap}
+.map-legend span{display:flex;align-items:center;gap:4px}.map-legend .dot{width:10px;height:10px;border-radius:2px;display:inline-block}
+.form-step{display:none;padding:8px 0}.form-step.active{display:block}
+.step-indicator{display:flex;gap:4px;margin-bottom:12px}
+.step-dot{flex:1;height:4px;border-radius:2px;background:var(--b);transition:.3s}.step-dot.active{background:var(--p)}.step-dot.done{background:var(--s)}
+.fg{margin-bottom:10px}
+.fg label{font-size:12px;font-weight:600;color:var(--t2);display:block;margin-bottom:3px}
+.fg input,.fg select,.fg textarea{width:100%;padding:8px 10px;border:1px solid var(--b);border-radius:6px;font-size:13px;outline:none;transition:.2s;background:var(--c)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--p);box-shadow:0 0 0 2px rgba(255,107,53,.1)}
+.fg textarea{resize:vertical;min-height:50px;font-family:inherit}
+.fg-row{display:flex;gap:6px}.fg-row>*{flex:1}
+.photo-grid{display:flex;gap:6px;flex-wrap:wrap}
+.photo-slot{width:64px;height:64px;border-radius:6px;border:2px dashed var(--b);display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;color:var(--t2);transition:.2s;background:var(--c)}
+.photo-slot:hover{border-color:var(--p)}
+.photo-slot.has-img{background:var(--pl);border-style:solid;border-color:var(--p);font-size:28px}
+.btn{padding:8px 18px;border-radius:20px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:.3s;display:inline-flex;align-items:center;gap:4px}
+.btn-p{background:var(--p);color:#fff}.btn-p:hover{background:var(--pd);transform:translateY(-1px)}
+.btn-o{background:transparent;border:1px solid var(--b);color:var(--t)}
+.btn-s{background:var(--s);color:#fff}.btn-d{background:var(--d);color:#fff}
+.btn-g{background:var(--g);color:#fff}
+.btn-block{width:100%;justify-content:center}.btn-sm{padding:4px 12px;font-size:11px}
+.btn-group{display:flex;gap:6px;margin:8px 0}
+.poster-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
+.poster-tpl{border-radius:8px;border:2px solid var(--b);padding:16px 8px;text-align:center;cursor:pointer;transition:.2s;background:var(--c);font-size:12px}
+.poster-tpl:hover{border-color:var(--p)}.poster-tpl.active{border-color:var(--p);background:var(--pl)}
+.poster-tpl .preview{font-size:40px;margin-bottom:4px}.poster-tpl .name{font-weight:600}.poster-tpl .desc{color:var(--t2);font-size:10px}
+.poster-preview{border:1px solid var(--b);border-radius:8px;padding:20px;text-align:center;min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--c);margin:8px 0}
+.poster-preview .big{font-size:60px}.poster-preview .title{font-size:20px;font-weight:800;color:var(--da);margin:4px 0}.poster-preview .info{font-size:12px;color:var(--t2)}
+.volunteer-card{display:flex;align-items:center;gap:10px;padding:10px;border-bottom:1px solid var(--b)}
+.volunteer-card:last-child{border-bottom:none}
+.volunteer-card .av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--pl)}
+.volunteer-card .name{font-weight:600;font-size:13px}.volunteer-card .status{font-size:11px;color:var(--t2)}
+.volunteer-card .status.online{color:var(--s)}
+.chat-bubble{background:var(--pl);border-radius:12px 12px 12px 4px;padding:8px 12px;margin:4px 0;font-size:13px;max-width:80%;display:inline-block}
+.chat-bubble.me{background:var(--p);color:#fff;border-radius:12px 12px 4px 12px;float:right}
+.chat-input{display:flex;gap:6px;padding:8px 0}
+.chat-input input{flex:1;padding:8px 12px;border:1px solid var(--b);border-radius:20px;outline:none;font-size:13px}
+.chat-input input:focus{border-color:var(--p)}
+.pricing-scroll{display:flex;gap:8px;overflow-x:auto;padding:4px 0 8px;scrollbar-width:none}
+.pricing-scroll::-webkit-scrollbar{display:none}
+.plan-mini{min-width:140px;background:var(--c);border:2px solid var(--b);border-radius:var(--r);padding:12px;text-align:center;flex-shrink:0;cursor:pointer;transition:.3s}
+.plan-mini:hover{transform:translateY(-2px);box-shadow:var(--sh)}
+.plan-mini.pop{border-color:var(--g);background:linear-gradient(135deg,#fffbeb,#fff)}
+.plan-mini.pop .tag{font-size:10px;background:var(--g);color:#fff;padding:1px 8px;border-radius:8px}
+.plan-mini .name{font-size:13px;font-weight:700}.plan-mini .price{font-size:22px;font-weight:800;color:var(--p);margin:2px 0}.plan-mini .price span{font-size:11px;color:var(--t2)}
+.plan-mini .desc{font-size:10px;color:var(--t2);margin:4px 0}.plan-mini .feat{font-size:10px;color:var(--s);margin:2px 0}
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:999;justify-content:center;align-items:center;padding:20px}
+.modal-overlay.show{display:flex}.modal{background:var(--c);border-radius:16px;padding:20px;max-width:400px;width:100%;max-height:85vh;overflow-y:auto}
+.modal h2{font-size:16px;margin-bottom:4px}.modal .pay-area{background:var(--pl);border-radius:8px;padding:12px;text-align:center;margin:8px 0}
+.modal .pay-area .big-price{font-size:34px;font-weight:800;color:var(--p)}
+.modal .close-btn{width:100%;padding:8px;border:none;border-radius:6px;cursor:pointer;background:var(--b);font-size:13px;margin-top:8px}
+.toast{position:fixed;top:50px;left:50%;transform:translateX(-50%);background:#1e293b;color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;z-index:1000;display:none;white-space:nowrap;max-width:90%}
+.toast.show{display:block;animation:ti .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}@keyframes ti{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@media(min-width:600px){body{max-width:480px;margin:0 auto;border-left:1px solid var(--b);border-right:1px solid var(--b)}}
+</style></head><body>
+<div class="topbar"><div class="topbar-main"><div class="logo">&#128062;宠寻<span> AI</span></div>
+<span class="badge" id="userPlanBadge">&#127969; 免费版</span>
+<span style="margin-left:auto;font-size:20px;cursor:pointer" onclick="navTo('profile')">&#128100;</span></div>
+<div class="stats-row"><div class="stat-item"><div class="num" id="statAlerts">3</div><div class="lbl">活跃寻宠</div></div>
+<div class="stat-item"><div class="num" id="statMatches">12</div><div class="lbl">AI 匹配</div></div>
+<div class="stat-item"><div class="num" id="statVols">28</div><div class="lbl">志愿者</div></div>
+<div class="stat-item"><div class="num" id="statRate">67%</div><div class="lbl">找回率</div></div></div></div>
+<div class="alert-banner"><span class="pulse"></span><span><b>紧急：</b>西湖区 3 岁橘猫「咪咪」走失已 6 小时</span><button class="btn-sm" onclick="navTo('match')">查看匹配</button></div>
+<div class="nav-tabs">
+<button class="tab active" onclick="navTo('dashboard')"><span class="icon">&#127968;</span>作战室</button>
+<button class="tab" onclick="navTo('report')"><span class="icon">&#128221;</span>发布</button>
+<button class="tab" onclick="navTo('match')"><span class="icon">&#129302;</span>AI匹配</button>
+<button class="tab" onclick="navTo('map')"><span class="icon">&#128506;</span>搜救地图</button>
+<button class="tab" onclick="navTo('community')"><span class="icon">&#128101;</span>社区</button>
+<button class="tab" onclick="navTo('poster')"><span class="icon">&#128444;</span>海报</button>
+</div>
+<div class="page active" id="pageDashboard" style="animation:fadeIn .3s ease">
+<div class="card"><div class="card-header">&#128200; 今日战况</div><div class="card-body"><div class="stat-grid">
+<div class="stat-card"><div class="num">3</div><div class="lbl">进行中</div></div>
+<div class="stat-card"><div class="num">12</div><div class="lbl">AI匹配</div></div>
+<div class="stat-card"><div class="num">5</div><div class="lbl">线索待核</div></div>
+<div class="stat-card"><div class="num">89%</div><div class="lbl">响应率</div></div>
+</div></div></div>
+<div class="quick-actions">
+<div class="qa-btn" onclick="navTo('report')"><span class="icon">&#128062;</span><span class="label">发布寻宠</span><span class="desc">AI 辅助快速发布</span></div>
+<div class="qa-btn" onclick="navTo('match')"><span class="icon">&#129302;</span><span class="label">AI 匹配</span><span class="desc">智能比对走失/发现</span></div>
+<div class="qa-btn" onclick="navTo('poster')"><span class="icon">&#128444;</span><span class="label">生成海报</span><span class="desc">多模板专业寻宠海报</span></div>
+<div class="qa-btn" onclick="navTo('community')"><span class="icon">&#128101;</span><span class="label">志愿者</span><span class="desc">组织搜索力量</span></div>
+</div>
+<div class="card"><div class="card-header">&#128226; 我的寻宠案件 <span style="font-size:11px;font-weight:400;color:var(--t2)">查看全部 &#8250;</span></div><div class="card-body" id="activeCases"></div></div>
+<div class="card"><div class="card-header">&#128337; 案件时间线 — 咪咪</div><div class="card-body"><div class="timeline">
+<div class="tl-item alert"><div class="tl-time">15 分钟前</div><div class="tl-title">&#128227; AI 匹配提示！</div><div class="tl-desc">滨江区发现一只特征相似的橘猫，匹配度 82%</div></div>
+<div class="tl-item done"><div class="tl-time">2 小时前</div><div class="tl-title">&#128204; 发布寻宠信息</div><div class="tl-desc">咪咪在西湖区文三路走失，已设置 500 元悬赏</div></div>
+<div class="tl-item done"><div class="tl-time">2 小时前</div><div class="tl-title">&#128227; AI 启动区域扩散</div><div class="tl-desc">已向周边 2km 内 47 位用户推送寻宠通知</div></div>
+<div class="tl-item"><div class="tl-time">3 小时前</div><div class="tl-title">&#128221; 生成寻宠海报</div><div class="tl-desc">已生成 3 种尺寸海报，待打印张贴</div></div>
+<div class="tl-item"><div class="tl-time">下一步</div><div class="tl-title">&#128101; 组织搜索</div><div class="tl-desc">已有 5 位志愿者响应，建议今晚 7 点集合搜索</div></div>
+</div></div></div></div>
+<div class="page" id="pageReport">
+<div class="card"><div class="card-header">&#128221; AI 辅助发布寻宠</div><div class="card-body">
+<div class="step-indicator" id="stepInd"><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+<div style="font-size:12px;color:var(--t2);margin-bottom:6px">第 <span id="stepNum">1</span>/4 步</div>
+<div class="form-step active" id="fs1"><h3 style="font-size:15px;margin-bottom:6px">&#128062; 宠物基本信息</h3>
+<div class="fg"><label>宠物类型</label><select id="rType"><option value="cat">&#128049; 猫</option><option value="dog">&#128054; 狗</option><option value="other">&#128057; 其他</option></select></div>
+<div class="fg"><label>宠物名称</label><input id="rName" placeholder="输入宠物名字"></div>
+<div class="fg-row"><div class="fg"><label>品种</label><input id="rBreed" placeholder="如：橘猫"></div><div class="fg"><label>颜色</label><input id="rColor" placeholder="如：橘黄色"></div></div>
+<div class="fg"><label>体量</label><select id="rSize"><option value="small">小型（5kg 以下）</option><option value="medium">中型（5-15kg）</option><option value="large">大型（15kg 以上）</option></select></div>
+<div class="fg"><label>显著特征（多选，点击选择）</label><div style="display:flex;gap:4px;flex-wrap:wrap">
+<span class="pill" onclick="toggleFeat(this)">戴项圈</span><span class="pill" onclick="toggleFeat(this)">有芯片</span><span class="pill" onclick="toggleFeat(this)">穿衣服</span><span class="pill" onclick="toggleFeat(this)">受伤</span><span class="pill" onclick="toggleFeat(this)">绝育标记</span><span class="pill" onclick="toggleFeat(this)">特殊毛色</span>
+</div></div>
+<button class="btn btn-p btn-block" onclick="nextStep(1)">下一步 &#8250;</button></div>
+<div class="form-step" id="fs2"><h3 style="font-size:15px;margin-bottom:6px">&#128205; 走失信息</h3>
+<div class="fg"><label>走失时间</label><input id="rDate" type="date"></div>
+<div class="fg"><label>省份</label><select id="rProv" onchange="updateCities()" style="padding:8px 10px;border:1px solid var(--b);border-radius:6px;font-size:13px;width:100%;outline:none"><option>浙江省</option><option>江苏省</option><option>上海市</option><option>北京市</option><option>广东省</option><option>福建省</option></select></div><div class="fg"><label>城市</label><select id="rCity" style="padding:8px 10px;border:1px solid var(--b);border-radius:6px;font-size:13px;width:100%;outline:none"><option>杭州市</option><option>宁波市</option><option>温州市</option><option>嘉兴市</option><option>湖州市</option><option>绍兴市</option></select></div><div class="fg"><label>详细地址</label><input id="rLoc" placeholder="详细地址，如：西湖区文三路 478 号"></div>
+<div class="fg"><label>走失时情况</label><textarea id="rCirc" placeholder="描述走失时的具体情况，如：开门时跑出去的、在公园松开牵引绳后跑丢的……"></textarea></div>
+<div class="fg"><label>照片（尽可能多角度）</label><div class="photo-grid"><div class="photo-slot" onclick="addPhoto(this)">+</div><div class="photo-slot" onclick="addPhoto(this)">+</div><div class="photo-slot" onclick="addPhoto(this)">+</div><div class="photo-slot" onclick="addPhoto(this)">+</div></div></div>
+<div class="btn-group"><button class="btn btn-o" onclick="prevStep(1)">&#8249; 上一步</button><button class="btn btn-p" onclick="nextStep(2)">下一步 &#8250;</button></div></div>
+<div class="form-step" id="fs3"><h3 style="font-size:15px;margin-bottom:6px">&#128222; 联系与悬赏</h3>
+<div class="fg"><label>手机号</label><input id="rPhone" placeholder="用于紧急联系"></div>
+<div class="fg"><label>微信号（可选）</label><input id="rWx" placeholder="方便微信直接联系"></div>
+<div class="fg"><label>悬赏金额</label><select id="rReward"><option value="0">不设置悬赏</option><option value="100">100 元</option><option value="200">200 元</option><option value="500">500 元</option><option value="1000">1000 元</option><option value="2000">2000 元</option><option value="5000">5000 元</option></select></div>
+<div class="fg"><label>悬赏说明（选填）</label><textarea id="rRewardDesc" placeholder="如：提供有效线索奖励 XXX，安全送回奖励 XXX"></textarea></div>
+<div class="btn-group"><button class="btn btn-o" onclick="prevStep(2)">&#8249; 上一步</button><button class="btn btn-p" onclick="nextStep(3)">下一步 &#8250;</button></div></div>
+<div class="form-step" id="fs4"><h3 style="font-size:15px;margin-bottom:6px">&#129302; AI 助力 & 发布</h3>
+<div class="fg"><label>AI 扩散半径</label><select id="rRadius"><option value="1">1 公里（免费）</option><option value="2">2 公里（&#9733; 加速包）</option><option value="5">5 公里（&#9733; 黄金套餐）</option><option value="10">10 公里（&#9733; 钻石套餐）</option></select></div>
+<div class="fg"><label>AI 自动匹配（系统将自动对比已发现的宠物）</label><select id="rAiMatch"><option value="1">开启 AI 匹配（推荐）</option><option value="0">手动查看</option></select></div>
+<div class="fg"><label>社交扩散</label><select id="rSocial"><option value="0">不自动扩散</option><option value="1">扩散到社区（加速包）</option><option value="2">全平台扩散（黄金套餐）</option></select></div>
+<div style="background:var(--pl);border-radius:8px;padding:10px;font-size:12px;margin:8px 0">
+&#128161; 当前选择：免费版（1km 扩散、基础匹配）<br>
+<span style="color:var(--p);font-weight:600;cursor:pointer" onclick="navTo('profile')">升级套餐可扩大至 10km + 全平台扩散</span></div>
+<div class="btn-group"><button class="btn btn-o" onclick="prevStep(3)">&#8249; 上一步</button><button class="btn btn-s" onclick="submitReport()">&#9989; AI 发布</button></div></div>
+</div></div></div>
+<div class="page" id="pageMatch">
+<div class="card"><div class="card-header">&#129302; AI 智能匹配中心 <span class="ai-badge" style="font-size:10px;background:var(--d);color:#fff;padding:2px 8px;border-radius:8px">实时分析中</span></div><div class="card-body">
+<div class="fg"><label>正在匹配案件</label><select id="matchCase"><option>咪咪 - 橘猫 - 西湖区</option><option>旺财 - 柴犬 - 拱墅区</option></select></div>
+<div style="font-size:12px;color:var(--t2);margin:6px 0">AI 正在扫描数据库中的 47 条发现记录，分析特征相似度…</div>
+<div class="match-card high"><div class="top-row"><div><strong>&#128049; 橘猫 #F-2026-0615</strong></div><div class="confidence high">92%</div></div>
+<div class="match-detail">发现地点：滨江区（距走失点 1.2km）&#8226; 时间：3 小时前 &#8226; 颜色匹配：&#10003; 体型匹配：&#10003; 项圈匹配：&#10003;</div>
+<div class="confidence-bar"><div class="fill high" style="width:92%"></div></div>
+<div style="display:flex;gap:4px;margin-top:6px"><button class="btn btn-sm btn-s" onclick="showToast('已通知发现者')">&#128222; 联系发现者</button><button class="btn btn-sm btn-o" onclick="showToast('标记为已查看')">标记</button></div></div>
+<div class="match-card medium"><div class="top-row"><div><strong>&#128049; 橘猫 #F-2026-0614</strong></div><div class="confidence medium">76%</div></div>
+<div class="match-detail">发现地点：上城区（距走失点 2.8km）&#8226; 时间：1 天前 &#8226; 颜色匹配：&#10003; 体型匹配：&#10003; 项圈匹配：&#10007;</div>
+<div class="confidence-bar"><div class="fill medium" style="width:76%"></div></div>
+<div style="display:flex;gap:4px;margin-top:6px"><button class="btn btn-sm btn-s" onclick="showToast('已通知发现者')">联系</button><button class="btn btn-sm btn-o">标记</button></div></div>
+<div class="match-card low"><div class="top-row"><div><strong>&#128054; 黄狗 #F-2026-0613</strong></div><div class="confidence low">34%</div></div>
+<div class="match-detail">发现地点：拱墅区（距走失点 4.1km）&#8226; 品种不匹配&#8226; AI 建议：低优先级</div>
+<div class="confidence-bar"><div class="fill low" style="width:34%"></div></div></div>
+<div style="text-align:center;padding:8px"><button class="btn btn-o btn-sm" onclick="showToast('AI 正在深度扫描…')">&#128269; 重新扫描匹配</button></div>
+</div></div></div>
+<div class="page" id="pageMap">
+<div class="card"><div class="card-header">&#128506; 搜救指挥地图 <span style="font-size:11px;font-weight:400;color:var(--t2)">咪咪 - 走失 3h</span></div><div class="card-body">
+<div class="map-container"><div class="grid" id="searchGrid"></div><div class="pin" style="top:100px;left:130px">&#128205;</div></div>
+<div class="map-legend"><span><span class="dot" style="background:rgba(255,107,53,.4)"></span> 已标记</span><span><span class="dot" style="background:rgba(16,185,129,.3)"></span> 已搜索</span><span><span class="dot" style="background:var(--p)"></span> 走失点</span><span><span class="dot" style="background:var(--g)"></span> 目击点</span></div>
+<div style="font-size:12px;color:var(--t2);margin:6px 0">&#128161; 建议优先搜索 A2-B3 区域（宠物常见活动范围）</div>
+<div class="btn-group"><button class="btn btn-sm btn-p" onclick="markZone()">标记区域</button><button class="btn btn-sm btn-s" onclick="showToast('搜索区域已分配至志愿者')">分配搜索任务</button></div>
+</div></div>
+<div class="card"><div class="card-header">&#128270; AI 搜索建议</div><div class="card-body">
+<div style="font-size:12px;padding:4px 0">&#8226; 根据橘猫行为模式，建议优先搜索：灌木丛、车底、楼道</div>
+<div style="font-size:12px;padding:4px 0">&#8226; 最佳搜索时间：清晨 5-7 点 / 傍晚 6-8 点（猫咪活动高峰期）</div>
+<div style="font-size:12px;padding:4px 0">&#8226; 走失 72 小时内是黄金找回期，平均找回率 67%</div>
+<div style="font-size:12px;padding:4px 0">&#8226; &#9733; 黄金套餐可获取完整行为预测报告</div>
+</div></div></div>
+<div class="page" id="pageCommunity">
+<div class="card"><div class="card-header">&#128101; 搜索志愿者 <span style="font-size:11px;font-weight:400;color:var(--t2)">28 人在线</span></div><div class="card-body" id="volList">
+</div></div>
+<div class="card"><div class="card-header">&#128172; 案件群聊 — 咪咪搜索队</div><div class="card-body">
+<div id="chatMessages"><div class="chat-bubble" style="clear:both"><b>志愿者 李明：</b>我在文三路西段问了一圈，有居民说上午看到过相似的猫</div>
+<div class="chat-bubble me" style="clear:both"><b>我：</b>具体在哪个位置？我马上过去</div>
+<div class="chat-bubble" style="clear:both"><b>志愿者 王芳：</b>我刚到滨江区的发现点，在等联系人回复</div></div>
+<div class="chat-input"><input id="chatInput" placeholder="输入消息…" onkeypress="if(event.key==='Enter')sendChat()"><button class="btn btn-sm btn-p" onclick="sendChat()">发送</button></div>
+</div></div></div>
+<div class="page" id="pagePoster">
+<div class="card"><div class="card-header">&#128444; AI 寻宠海报工坊</div><div class="card-body">
+<div class="poster-grid">
+<div class="poster-tpl active" onclick="selectTpl(this,0)"><div class="preview">&#128062;</div><div class="name">经典寻宠</div><div class="desc">A4 尺寸，适合打印张贴</div></div>
+<div class="poster-tpl" onclick="selectTpl(this,1)"><div class="preview">&#127911;</div><div class="name">紧急扩散</div><div class="desc">醒目红色，适合朋友圈</div></div>
+<div class="poster-tpl" onclick="selectTpl(this,2)"><div class="preview">&#128247;</div><div class="name">图文详细</div><div class="desc">多照片，适合社区公告栏</div></div>
+</div>
+<div class="poster-preview" id="posterPreview"><div class="big">&#128049;</div><div class="title">寻猫启事</div><div class="info">咪咪 &#8226; 橘猫 &#8226; 西湖区文三路<br>如有线索请联系：138****1234<br>悬赏：&#165;500</div></div>
+<div class="btn-group"><button class="btn btn-sm btn-p" onclick="showToast('&#9989; 海报已生成，可下载打印')">&#128229; 生成海报</button><button class="btn btn-sm btn-g" onclick="showToast('&#9733; 黄金套餐解锁高清无水印版')">&#128142; 高清无水印</button></div>
+</div></div></div>
+<div class="page" id="pageProfile">
+<div class="card"><div class="card-body" style="text-align:center;padding:20px"><div style="font-size:50px">&#128100;</div><h3>我的账号</h3><p style="color:var(--t2);font-size:13px">188****5678 &#8226; 杭州</p></div></div>
+<div class="card"><div class="card-header">&#128142; 我的套餐</div><div class="card-body" id="myPlanDisplay"><div style="background:var(--pl);border-radius:8px;padding:12px;text-align:center"><div style="font-size:14px;font-weight:600">&#127969; 基础版（免费）</div><div style="font-size:12px;color:var(--t2);margin:4px 0">1km 扩散 &#8226; 基础匹配 &#8226; 无广告</div><button class="btn btn-p btn-sm" onclick="showPay()" style="margin-top:4px">升级套餐</button></div></div></div>
+<div class="card"><div class="card-header">&#128142; 选择套餐 <span style="font-size:11px;font-weight:400;color:var(--t2)">一次性付费，永久使用</span></div><div class="card-body"><div class="pricing-scroll">
+<div class="plan-mini" onclick="showPayDetail(0)"><div class="name">&#127969; 基础</div><div class="price">&#165;0 <span>/ 永久</span></div><div class="desc">1km 扩散</div><div class="feat">基础匹配</div></div>
+<div class="plan-mini" onclick="showPayDetail(1)"><div class="name">&#9889; 加速</div><div class="price">&#165;39 <span>/ 永久</span></div><div class="desc">2km 扩散+置顶</div><div class="feat">AI 匹配通知</div></div>
+<div class="plan-mini pop" onclick="showPayDetail(2)"><div class="tag">&#127775; 推荐</div><div class="name">&#128293; 黄金</div><div class="price">&#165;99 <span>/ 永久</span></div><div class="desc">5km 扩散+海报</div><div class="feat">行为预测+群聊</div></div>
+<div class="plan-mini" onclick="showPayDetail(3)"><div class="name">&#128142; 钻石</div><div class="price">&#165;199 <span>/ 永久</span></div><div class="desc">10km 全平台</div><div class="feat">专属客服+身份证</div></div>
+<div class="plan-mini" onclick="showPayDetail(4)"><div class="name">&#127970; 机构</div><div class="price">&#165;499 <span>/ 永久</span></div><div class="desc">批量操作+API</div><div class="feat">自定义品牌</div></div>
+</div></div></div>
+<div class="card"><div class="card-header">&#127775; 成功找回故事</div><div class="card-body" style="font-size:13px"><div style="display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--b)"><span style="font-size:28px">&#128049;</span><div><b>朱朱</b> - 温州市<br><span style="color:var(--t2);font-size:12px">AI 匹配 + 社区扩散，24小时内找回</span></div></div><div style="display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--b)"><span style="font-size:28px">&#128054;</span><div><b>小黑</b> - 杭州市<br><span style="color:var(--t2);font-size:12px">志愿者搜索队協助，3天后安全回家</span></div></div><div style="display:flex;gap:8px;padding:8px 0"><span style="font-size:28px">&#128062;</span><div><b>乐乐</b> - 上海市<br><span style="color:var(--t2);font-size:12px">电子宠物身份证扫描回家</span></div></div></div></div><div class="card"><div class="card-header">&#128200; 找回统计</div><div class="card-body">
+<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px"><span>我的发布</span><span>2 次</span></div>
+<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px"><span>AI 匹配成功</span><span>1 次</span></div>
+<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px"><span>社区响应</span><span>12 人</span></div>
+<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px"><span>累计找回</span><span>1 只</span></div>
+</div></div></div>
+<div class="modal-overlay" id="payModal"><div class="modal"><h2 id="payTitle">&#128142; 选择套餐</h2>
+<div id="payDetail"></div>
+<div class="pay-area"><div class="big-price" id="payPrice">&#165;99</div><p style="font-size:13px;color:var(--t2)">请添加微信 <b>seller_pet</b> 转账</p></div>
+<p style="font-size:11px;color:var(--t2);text-align:center">转账后发送截图，即刻开通</p>
+<button class="close-btn" id="payBtn" onclick="closePay()">确定</button></div></div>
+<div class="toast" id="toast"></div>
+<script>
+var activeCases=[{name:"咪咪",breed:"橘猫",loc:"西湖区文三路",time:"3 小时前",status:"active",urgent:true,matches:3},{name:"旺财",breed:"柴犬",loc:"拱墅区大关路",time:"1 天前",status:"active",urgent:false,matches:1}];
+var volunteers=[{name:"李明",status:"online",dist:"0.3km",tasks:5},{name:"王芳",status:"online",dist:"0.8km",tasks:3},{name:"张伟",status:"busy",dist:"1.2km",tasks:2},{name:"赵丽",status:"online",dist:"1.5km",tasks:1},{name:"陈强",status:"offline",dist:"2.0km",tasks:0}];
+var currentPlan=0;var formStep=1;var selectedFeatures=[];
+function navTo(page){var m={dashboard:"pageDashboard",report:"pageReport",match:"pageMatch",map:"pageMap",community:"pageCommunity",poster:"pagePoster",profile:"pageProfile"};
+document.querySelectorAll(".page").forEach(function(p){p.classList.remove("active")});
+document.getElementById(m[page]).classList.add("active");
+document.querySelectorAll(".tab").forEach(function(t,i){t.classList.toggle("active",["dashboard","report","match","map","community","poster"][i]===page)})}
+function renderCases(){var html="";activeCases.forEach(function(c){html+="<div class=\"pet-card\" style=\"margin-bottom:8px\"><div class=\"top\" style=\"padding:10px\"><div class=\"avatar\" style=\"width:60px;height:60px;font-size:32px;background:"+(c.urgent?"#fef2f2":"var(--pl)")+"\">&#128049;</div><div class=\"info\"><h3 style=\"font-size:14px\">"+c.name+(c.urgent?" <span style=\"color:var(--da);font-size:11px\">&#9888; 紧急</span>":"")+"</h3><div class=\"meta\" style=\"font-size:11px\">"+c.breed+" &#8226; "+c.loc+" &#8226; "+c.time+"</div><div style=\"font-size:11px;color:var(--s);margin-top:2px\">AI 匹配：<b>"+c.matches+"</b> 条</div></div></div></div>"});
+document.getElementById("activeCases").innerHTML=html||"<div style=\"text-align:center;padding:20px;color:var(--t2);font-size:13px\">暂无活跃案件</div>"}
+renderCases();
+renderCases();function renderVols(){var html="";volunteers.forEach(function(v){var s=v.status==="online"?"&#10004; 在线":"&#9711; 忙碌";var sc=v.status==="online"?"online":"";html+="<div class=\"volunteer-card\"><div class=\"av\">&#128100;</div><div><div class=\"name\">"+v.name+"</div><div class=\"status "+sc+"\">"+s+" &#8226; 距离 "+v.dist+" &#8226; 已完成 "+v.tasks+" 次搜索</div></div></div>"});
+document.getElementById("volList").innerHTML=html}
+renderVols();
+(function(){var g=document.getElementById("searchGrid");var labels=["A","B","C","D","E","F"];for(var i=0;i<24;i++){var z=document.createElement("div");z.className="zone";var row=Math.floor(i/6);var col=i%6;z.textContent=labels[col]+(row+1);
+if((row===0&&col===1)||(row===0&&col===2)||(row===1&&col===1))z.classList.add("marked");
+if((row===0&&col===3)||(row===1&&col===3))z.classList.add("searched");
+z.onclick=function(){this.classList.toggle("marked")};g.appendChild(z)};})();
+function nextStep(n){formStep=n+1;document.getElementById("stepNum").textContent=formStep;
+document.querySelectorAll(".form-step").forEach(function(f,i){f.classList.toggle("active",i+1===formStep)});
+document.querySelectorAll(".step-dot").forEach(function(d,i){d.classList.toggle("active",i+1===formStep);d.classList.toggle("done",i+1<formStep)})}
+function prevStep(n){formStep=n;document.getElementById("stepNum").textContent=formStep;
+document.querySelectorAll(".form-step").forEach(function(f,i){f.classList.toggle("active",i+1===formStep)});
+document.querySelectorAll(".step-dot").forEach(function(d,i){d.classList.toggle("active",i+1===formStep);d.classList.toggle("done",i+1<formStep)})}
+function toggleFeat(el){el.classList.toggle("active");var pillStyle=".pill{display:inline-block;padding:4px 10px;border:1px solid var(--b);border-radius:14px;cursor:pointer;font-size:12px;transition:.2s;background:var(--c)}.pill.active{background:var(--p);color:#fff;border-color:var(--p)}";
+if(!document.getElementById("pillStyle")){var s=document.createElement("style");s.id="pillStyle";s.textContent=pillStyle;document.head.appendChild(s)}}
+function addPhoto(el){el.classList.toggle("has-img");el.textContent=el.classList.contains("has-img")?"&#128247;":"+"}
+function markZone(){document.querySelectorAll(".zone.marked").forEach(function(z){z.classList.toggle("searched",!z.classList.contains("searched"));z.classList.remove("marked")});showToast("&#9989; 区域已标记为已搜索")}
+function submitReport(){showToast("&#9989; 寻宠信息已发布！AI 匹配已启动");navTo("dashboard")}
+function selectTpl(el,idx){document.querySelectorAll(".poster-tpl").forEach(function(t){t.classList.remove("active")});el.classList.add("active")}
+function sendChat(){var inp=document.getElementById("chatInput");var msg=inp.value.trim();if(!msg)return;var div=document.getElementById("chatMessages");var b=document.createElement("div");b.className="chat-bubble me";b.style.cssText="clear:both";b.innerHTML="<b>我：</b>"+msg;div.appendChild(b);inp.value="";div.scrollTop=div.scrollHeight}
+function showPayDetail(idx){var plans=[{n:"&#127969; 基础版",p:0,d:"1km 扩散, 基础匹配"},{n:"&#9889; 加速包",p:39,d:"2km 扩散, 置顶7天, AI匹配"},{n:"&#128293; 黄金套餐",p:99,d:"5km 扩散, AI海报, 行为预测, 群聊"},{n:"&#128142; 钻石套餐",p:199,d:"10km 全平台, 专属客服, 宠物身份证"},{n:"&#127970; 机构版",p:499,d:"批量操作, API, 自定义品牌"}];
+document.getElementById("payTitle").innerHTML="&#128142; "+plans[idx].n;document.getElementById("payDetail").innerHTML="<p style=\"font-size:13px;color:var(--t2);margin:4px 0\">"+plans[idx].d+"</p>";
+document.getElementById("payPrice").innerHTML="&#165;"+plans[idx].p;document.getElementById("payModal").classList.add("show")}
+function showPay(){showPayDetail(2)}
+function closePay(){document.getElementById("payModal").classList.remove("show")}
+function showToast(m){var t=document.getElementById("toast");t.innerHTML=m;t.classList.add("show");setTimeout(function(){t.classList.remove("show")},2500)}
+document.getElementById("rDate").value=new Date().toISOString().slice(0,10);loadState()
+
+// === ITERATION 1: Photo Upload + localStorage ===
+var uploadedPhotos=[];
+var appState={posts:[],messages:[],settings:{darkMode:false,plan:0}};
+
+function handlePhotos(input){
+  var files=input.files;
+  for(var i=0;i<files.length&&i<6;i++){
+    var reader=new FileReader();
+    reader.onload=function(e){
+      uploadedPhotos.push(e.target.result);
+      renderPhotos();
+      saveState();
+    };
+    reader.readAsDataURL(files[i]);
+  }
+  input.value='';
+}
+
+function renderPhotos(){
+  var slots=document.querySelectorAll('.photo-slot');
+  for(var i=0;i<slots.length;i++){
+    if(i<uploadedPhotos.length){
+      slots[i].classList.add('has-img');
+      slots[i].innerHTML='<img src="'+uploadedPhotos[i]+'" style="width:100%;height:100%;object-fit:cover;border-radius:4px">';
+    }else{
+      slots[i].classList.remove('has-img');
+      slots[i].innerHTML='+';
+    }
+  }
+}
+
+function triggerPhotoUpload(){
+  document.getElementById('photoInput').click();
+}
+
+// Make photo slots clickable
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.photo-slot').forEach(function(el){
+    el.onclick=function(){triggerPhotoUpload()};
+  });
+});
+
+function saveState(){
+  appState.posts=pets;
+  appState.messages=document.getElementById('chatMessages')?document.getElementById('chatMessages').innerHTML:'';
+  appState.settings.plan=currentPlan;
+  try{localStorage.setItem('findpet_state',JSON.stringify(appState))}catch(e){}
+}
+
+function loadState(){
+  try{
+    var saved=JSON.parse(localStorage.getItem('findpet_state'));
+    if(saved){
+      if(saved.posts&&saved.posts.length>0){
+        // Merge saved posts with default data
+        var existingIds=pets.map(function(p){return p.id});
+        saved.posts.forEach(function(p){
+          if(existingIds.indexOf(p.id)===-1){pets.push(p)}
+        });
+      }
+      appState=saved;
+    }
+  }catch(e){}
+}
+
+// Override submitReport to save
+var origSubmit=submitReport;
+submitReport=function(){
+  origSubmit();
+  saveState();
+};
+
+// Override renderVols to fix photo click handlers
+var origRenderVols=renderVols;
+renderVols=function(){
+  origRenderVols();
+  document.querySelectorAll('.photo-slot').forEach(function(el){
+    el.onclick=function(){triggerPhotoUpload()};
+  });
+};
+
+// Gallery view
+function showGallery(photos){
+  var c=document.getElementById('galleryContent');
+  c.innerHTML='';
+  photos.forEach(function(p){
+    c.innerHTML+='<img src="'+p+'" style="width:100px;height:100px;object-fit:cover;border-radius:6px;cursor:pointer" onclick="window.open(this.src)">';
+  });
+  document.getElementById('galleryModal').classList.add('show');
+}
+
+
+// Iter 4-6: Search, Detail, Share
+function filterCases(){var q=(document.getElementById("searchBar")||{}).value||"";var t=(document.getElementById("filterType")||{}).value||"all";var u=(document.getElementById("filterUrgent")||{}).value||"all";var cards=document.querySelectorAll("#activeCases .pet-card");if(cards)cards.forEach(function(c){var txt=c.textContent.toLowerCase();var show=true;if(q&&txt.indexOf(q.toLowerCase())===-1)show=false;if(t!="all"&&txt.indexOf(t)===-1)show=false;if(u=="urgent"&&txt.indexOf("紧急")===-1)show=false;c.style.display=show?"":"none"})}
+function showDetail(n,b,l,d,c,r){var el=document.getElementById("petDetailContent");if(!el)return;var x="";x+="<h2 style='font-size:18px;margin-bottom:4px'>"+n+"</h2>";x+="<p style='color:var(--t2);font-size:13px;margin-bottom:8px'>"+b+" | "+l+"</p>";x+="<p style='font-size:14px;line-height:1.6;margin-bottom:8px'>"+(d||"暂无描述")+"</p>";x+="<div style='background:var(--pl);border-radius:8px;padding:10px;margin:8px 0;text-align:center'>&#128222; "+c+"</div>";if(r>0)x+="<div style='text-align:center;color:var(--g);font-weight:700;font-size:18px'>悬赏: &yen;"+r+"</div>";x+="<div style='display:flex;gap:8px;justify-content:center;margin-top:8px'><button class='btn btn-sm btn-p' onclick='copyShareText(\"'+n+'\",\"'+b+'\"')'>&#128203; 分享</button><button class='btn btn-sm btn-o' onclick='showToast(\"已标记\")'>&#128220; 提供线索</button></div>";el.innerHTML=x;document.getElementById("petDetailModal").style.display="flex"}
+function copyShareText(n,b){var t="寻宠扩散！"+n+"("+b+")已走失，如有线索请联系并报告宠寻App";navigator.clipboard.writeText(t).then(function(){showToast("已复制，可粘贴到微信")}).catch(function(){showToast("复制失败")})}
+// Click pet cards to see detail
+document.addEventListener("click",function(e){var card=e.target.closest(".pet-card");if(card&&!e.target.closest("button")){var n=(card.querySelector("h3")||{}).textContent||"";var t=card.textContent;showDetail(n,"","","",0,0)}});
+
+// Iter 7: Region picker
+var cities={"浙江省":["杭州市","宁波市","温州市","嘉兴市","湖州市","绍兴市","金华市","台州市"],"江苏省":["南京市","苏州市","无锡市","常州市","南通市","扬州市"],"上海市":["黄浦区","静安区","徐汇区","长宁区","浦东新区"],"北京市":["朝阳区","海淀区","东城区","西城区","丰台区","通州区"],"广东省":["广州市","深圳市","珠海市","佛山市","东莞市","惠州市"],"福建省":["福州市","厦门市","泉州市","漳州市","莆田市"]};
+function updateCities(){var p=document.getElementById("rProv").value;var cs=cities[p]||[];var sel=document.getElementById("rCity");sel.innerHTML="";cs.forEach(function(c){sel.innerHTML+="<option>"+c+"</option>"})}
+</script><input type="file" id="photoInput" accept="image/*" multiple style="display:none" onchange="handlePhotos(this)">
+<div class="modal-overlay" id="galleryModal"><div class="modal" style="max-width:500px"><div id="galleryContent" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0"></div><button class="close-btn" onclick="document.getElementById('galleryModal').classList.remove('show')">关闭</button></div></div>
+<!-- PWA Ready - Can be added to home screen -->
+</body></html>
