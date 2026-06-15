@@ -242,7 +242,7 @@ body{background:var(--bg);color:var(--t);min-height:100vh;padding-bottom:0;overf
 </div></div></div>
 <div class="modal-overlay" id="payModal"><div class="modal"><h2 id="payTitle">&#128142; 选择套餐</h2>
 <div id="payDetail"></div>
-<div class="pay-area"><div class="big-price" id="payPrice">&#165;99</div><p style="font-size:13px;color:var(--t2)">请添加微信 <b>seller_pet</b> 转账</p></div>
+<div class="pay-area"><div class="big-price" id="payPrice">&#165;99</div><p style="font-size:13px;color:var(--t2)">请支付宝账号 <b>hezhong_z@aliyun.com</b> 转账</p></div>
 <p style="font-size:11px;color:var(--t2);text-align:center">转账后发送截图，即刻开通</p>
 <button class="close-btn" id="payBtn" onclick="closePay()">确定</button></div></div>
 <div class="toast" id="toast"></div>
@@ -390,4 +390,5 @@ function updateCities(){var p=document.getElementById("rProv").value;var cs=citi
 </script><input type="file" id="photoInput" accept="image/*" multiple style="display:none" onchange="handlePhotos(this)">
 <div class="modal-overlay" id="galleryModal"><div class="modal" style="max-width:500px"><div id="galleryContent" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0"></div><button class="close-btn" onclick="document.getElementById('galleryModal').classList.remove('show')">关闭</button></div></div>
 <!-- PWA Ready - Can be added to home screen -->
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/find-pet/sw.js").then(function(r){console.log("SW registered:"+r.scope)}).catch(function(e){console.log("SW failed:"+e)})})}</script>
 </body></html>
