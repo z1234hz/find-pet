@@ -1,0 +1,16 @@
+{
+  "name": "宠寻 - AI 寻宠平台",
+  "short_name": "宠寻",
+  "description": "AI 智能寻宠 · 让每一个毛孩子回家",
+  "start_url": "/find-pet/",
+  "display": "standalone",
+  "background_color": "#f0f2f5",
+  "theme_color": "#ff6b35",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#128062;</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}
