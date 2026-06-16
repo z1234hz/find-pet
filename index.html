@@ -103,6 +103,67 @@ body{background:var(--bg);color:var(--t);min-height:100vh;padding-bottom:0;overf
 .toast.show{display:block;animation:ti .3s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}@keyframes ti{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 @media(min-width:600px){body{max-width:480px;margin:0 auto;border-left:1px solid var(--b);border-right:1px solid var(--b)}}
+
+.story-card{background:var(--c);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:10px;overflow:hidden;cursor:pointer;transition:.2s}
+.story-card:active{transform:scale(.98)}
+.story-card .top{display:flex;gap:10px;padding:12px}
+.story-card .savatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;background:var(--pl);flex-shrink:0}
+.story-card .sinfo{flex:1}.story-card .sinfo h4{font-size:14px}.story-card .sinfo .smeta{font-size:11px;color:var(--t2);margin:2px 0}
+.story-card .sinfo .sexcerpt{font-size:12px;color:var(--t2);line-height:1.5;margin-top:4px}
+.story-card .tags{display:flex;gap:4px;margin:4px 0}
+.story-card .tags span{padding:1px 8px;border-radius:8px;font-size:10px;background:var(--pl);color:var(--p)}
+.article-card{background:var(--c);border-radius:var(--r);padding:12px;margin-bottom:8px;cursor:pointer;border-left:3px solid var(--p);box-shadow:var(--sh);transition:.2s}
+.article-card:active{transform:scale(.99)}
+.article-card .cat{font-size:10px;color:var(--p);font-weight:600;text-transform:uppercase}
+.article-card h4{font-size:14px;margin:2px 0}.article-card p{font-size:12px;color:var(--t2);line-height:1.5}
+.vol-card{display:flex;align-items:center;gap:10px;padding:10px;background:var(--c);border-radius:var(--r);margin-bottom:8px;box-shadow:var(--sh)}
+.vol-card .vav{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--pl)}
+.vol-card .vinfo{flex:1}.vol-card .vinfo .vname{font-weight:600;font-size:13px}.vol-card .vinfo .vstat{font-size:11px;color:var(--t2)}
+.vol-card .vbadge{background:var(--p);color:#fff;padding:2px 8px;border-radius:8px;font-size:10px}
+.pro-card{background:var(--c);border-radius:var(--r);padding:12px;margin-bottom:8px;box-shadow:var(--sh);border:1px solid var(--b)}
+.pro-card .ptop{display:flex;justify-content:space-between;align-items:center}
+.pro-card .ptop h4{font-size:14px}.pro-card .ptop .pprice{font-size:16px;font-weight:700;color:var(--g)}
+.pro-card .pdesc{font-size:12px;color:var(--t2);margin:4px 0;line-height:1.5}
+.pro-card .ptags{display:flex;gap:4px;flex-wrap:wrap;margin:4px 0}
+.pro-card .ptags span{padding:2px 8px;border-radius:8px;font-size:10px;background:#e0f2fe;color:#0369a1}
+.submit-story-btn{text-align:center;margin:12px 0}
+.story-form textarea{width:100%;padding:8px 10px;border:1px solid var(--b);border-radius:6px;font-size:13px;outline:none;resize:vertical;min-height:60px;font-family:inherit}
+
+
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}
+.chart-box{background:var(--c);border-radius:var(--r);padding:10px;box-shadow:var(--sh)}
+.chart-box .ctitle{font-size:12px;font-weight:600;margin-bottom:6px;color:var(--t2)}
+.chart-box canvas{width:100%;height:140px;border-radius:4px}
+.chart-box.full{grid-column:1/-1}
+.chat-page{display:flex;flex-direction:column;height:calc(100vh - 200px)}
+.conv-list{overflow-y:auto;flex-shrink:0}
+.conv-item{display:flex;align-items:center;gap:8px;padding:8px 10px;cursor:pointer;border-bottom:1px solid var(--b);transition:.2s}
+.conv-item:hover{background:var(--pl)}.conv-item.active{background:var(--pl)}
+.conv-item .cav{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--pl);flex-shrink:0}
+.conv-item .cinfo{flex:1;min-width:0}.conv-item .cinfo .cname{font-size:13px;font-weight:600}.conv-item .cinfo .cmsg{font-size:11px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.conv-item .ctime{font-size:10px;color:var(--t2);flex-shrink:0}
+.conv-item .unread{background:var(--p);color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;margin-left:4px}
+.msg-area{flex:1;overflow-y:auto;padding:8px 0;display:flex;flex-direction:column;gap:6px}
+.msg{max-width:80%;padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.5;clear:both}
+.msg.in{background:var(--pl);float:left;border-bottom-left-radius:4px}
+.msg.out{background:var(--p);color:#fff;float:right;border-bottom-right-radius:4px;align-self:flex-end}
+.msg .mtime{font-size:9px;opacity:.7;margin-top:2px;display:block}
+.chat-input-bar{display:flex;gap:6px;padding:8px 0;border-top:1px solid var(--b);flex-shrink:0}
+.chat-input-bar input{flex:1;padding:8px 12px;border:1px solid var(--b);border-radius:20px;outline:none;font-size:13px}
+.chat-input-bar input:focus{border-color:var(--p)}
+.review-header{display:flex;justify-content:space-between;align-items:center;margin:8px 0}
+.review-card{background:var(--c);border-radius:var(--r);padding:10px;margin-bottom:6px;border:1px solid var(--b)}
+.review-card .ruser{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
+.review-card .ruser .rav{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--pl)}
+.review-card .rstars{color:var(--g);font-size:14px;margin:2px 0}
+.review-card .rtext{font-size:12px;color:var(--t2);line-height:1.5}
+.review-card .rdate{font-size:10px;color:var(--t2);margin-top:2px}
+.star-input{font-size:24px;cursor:pointer;color:#ddd;transition:.2s;display:inline-block}
+.star-input.active{color:var(--g)}
+.health-item{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--b);font-size:13px}
+.health-item .hicon{font-size:20px;width:30px;text-align:center}
+.health-item .hinfo{flex:1}.health-item .hinfo .hlabel{font-weight:600}.health-item .hinfo .hval{color:var(--t2);font-size:12px}
+
 </style></head><body>
 <div class="topbar"><div class="topbar-main"><div class="logo">&#128062;宠寻<span> AI</span></div>
 <span class="badge" id="userPlanBadge">&#127969; 免费版</span>
@@ -111,17 +172,17 @@ body{background:var(--bg);color:var(--t);min-height:100vh;padding-bottom:0;overf
 <div class="stat-item"><div class="num" id="statMatches">12</div><div class="lbl">AI 匹配</div></div>
 <div class="stat-item"><div class="num" id="statVols">28</div><div class="lbl">志愿者</div></div>
 <div class="stat-item"><div class="num" id="statRate">67%</div><div class="lbl">找回率</div></div></div></div>
-<div class="alert-banner"><span class="pulse"></span><span><b>紧急：</b>西湖区 3 岁橘猫「咪咪」走失已 6 小时</span><button class="btn-sm" onclick="navTo('match')">查看匹配</button></div>
+<div id="installBanner" style="display:none;background:linear-gradient(90deg,#ff6b35,#e84315);color:#fff;padding:10px 16px;text-align:center;font-size:13px;cursor:pointer" onclick="installApp()">&#128142; 将宠寻安装到手机 &nbsp;<span style="text-decoration:underline">立即安装</span></div><div class="alert-banner"><span class="pulse"></span><span><b>紧急：</b>西湖区 3 岁橘猫「咪咪」走失已 6 小时</span><button class="btn-sm" onclick="navTo('match')">查看匹配</button></div>
 <div class="nav-tabs">
 <button class="tab active" onclick="navTo('dashboard')"><span class="icon">&#127968;</span>作战室</button>
 <button class="tab" onclick="navTo('report')"><span class="icon">&#128221;</span>发布</button>
 <button class="tab" onclick="navTo('match')"><span class="icon">&#129302;</span>AI匹配</button>
 <button class="tab" onclick="navTo('map')"><span class="icon">&#128506;</span>搜救地图</button>
 <button class="tab" onclick="navTo('community')"><span class="icon">&#128101;</span>社区</button>
-<button class="tab" onclick="navTo('poster')"><span class="icon">&#128444;</span>海报</button>
+<button class="tab" onclick="navTo('stories')"><span class="icon">&#127775;</span>成功故事</button><button class="tab" onclick="navTo('experience')"><span class="icon">&#128218;</span>经验</button><button class="tab" onclick="navTo('volunteer')"><span class="icon">&#129309;</span>志愿者</button><button class="tab" onclick="navTo('pros')"><span class="icon">&#128188;</span>专业搜寻</button><button class="tab" onclick="navTo('poster')"><span class="icon">&#128444;</span>海报</button>
 </div>
 <div class="page active" id="pageDashboard" style="animation:fadeIn .3s ease">
-<div class="card"><div class="card-header">&#128200; 今日战况</div><div class="card-body"><div class="stat-grid">
+<div class="card"><div class="card-header">&#128200; 今日战况</div><div class="card-body"><div class="charts-grid"><div class="chart-box"><div class="ctitle">&#128200; 本周案件趋势</div><canvas id="lineChart" height="140"></canvas></div><div class="chart-box"><div class="ctitle">&#128062; 宠物类型分布</div><canvas id="donutChart" height="140"></canvas></div><div class="chart-box full"><div class="ctitle">&#128200; 月度找回率</div><canvas id="barChart" height="120"></canvas></div></div><div class="stat-grid">
 <div class="stat-card"><div class="num">3</div><div class="lbl">进行中</div></div>
 <div class="stat-card"><div class="num">12</div><div class="lbl">AI匹配</div></div>
 <div class="stat-card"><div class="num">5</div><div class="lbl">线索待核</div></div>
@@ -209,12 +270,12 @@ body{background:var(--bg);color:var(--t);min-height:100vh;padding-bottom:0;overf
 <div class="card"><div class="card-header">&#128101; 搜索志愿者 <span style="font-size:11px;font-weight:400;color:var(--t2)">28 人在线</span></div><div class="card-body" id="volList">
 </div></div>
 <div class="card"><div class="card-header">&#128172; 案件群聊 — 咪咪搜索队</div><div class="card-body">
-<div id="chatMessages"><div class="chat-bubble" style="clear:both"><b>志愿者 李明：</b>我在文三路西段问了一圈，有居民说上午看到过相似的猫</div>
+<div id="convTitle" style="font-size:14px;font-weight:600;margin-bottom:8px">微信公众账号消息</div><div class="conv-list" id="convList"></div><div class="msg-area" id="msgArea"><div class="chat-bubble" style="clear:both"><b>志愿者 李明：</b>我在文三路西段问了一圈，有居民说上午看到过相似的猫</div>
 <div class="chat-bubble me" style="clear:both"><b>我：</b>具体在哪个位置？我马上过去</div>
 <div class="chat-bubble" style="clear:both"><b>志愿者 王芳：</b>我刚到滨江区的发现点，在等联系人回复</div></div>
-<div class="chat-input"><input id="chatInput" placeholder="输入消息…" onkeypress="if(event.key==='Enter')sendChat()"><button class="btn btn-sm btn-p" onclick="sendChat()">发送</button></div>
+<div class="chat-input-bar"><input id="chatInput" placeholder="输入消息…" onkeypress="if(event.key==='Enter')sendChat()"><button class="btn btn-sm btn-p" onclick="sendChat()">发送</button></div>
 </div></div></div>
-<div class="page" id="pagePoster">
+<div class="page" id="pageStories"><div class="card"><div class="card-header">&#127775; 成功找回故事</div><div class="card-body"><div style="display:flex;gap:4px;margin-bottom:8px"><select id="storyFilter" style="flex:1;padding:6px;border:1px solid var(--b);border-radius:6px;font-size:12px;outline:none" onchange="renderStories()"><option value="all">全部故事</option><option value="cat">猫咪</option><option value="dog">狗狗</option><option value="other">其他</option></select></div><div id="storyList"></div><div class="submit-story-btn"><button class="btn btn-p" onclick="showStoryForm()">&#128221; 分享我的故事</button></div></div></div></div><div class="page" id="pageExperience"><div class="card"><div class="card-header">&#128218; 经验分享</div><div class="card-body"><div style="display:flex;gap:4px;margin-bottom:8px;overflow-x:auto"><button class="pill active" onclick="filterArticles('all',this)" style="flex-shrink:0">全部</button><button class="pill" onclick="filterArticles('prevent',this)" style="flex-shrink:0">预防走失</button><button class="pill" onclick="filterArticles('search',this)" style="flex-shrink:0">搜索技巧</button><button class="pill" onclick="filterArticles('experience',this)" style="flex-shrink:0">找回经验</button><button class="pill" onclick="filterArticles('safety',this)" style="flex-shrink:0">宠物安全</button></div><div id="articleList"></div></div></div></div><div class="page" id="pageVolunteer"><div class="card"><div class="card-header">&#129309; 志愿者中心</div><div class="card-body"><div id="volDashboard"><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px"><div class="stat-card"><div class="num">28</div><div class="lbl">志愿者</div></div><div class="stat-card"><div class="num">12</div><div class="lbl">进行中</div></div><div class="stat-card"><div class="num">89%</div><div class="lbl">完成率</div></div></div></div><div id="volunteerList"></div><div style="text-align:center;margin-top:8px"><button class="btn btn-p" onclick="showVolForm()">&#128221; 申请成为志愿者</button></div></div></div></div><div class="page" id="pagePros"><div class="card"><div class="card-header">&#128188; 专业搜寻服务</div><div class="card-body"><div id="proList"></div><div class="card-header" style="margin-top:12px;padding:8px 0">&#11088; 服务评价</div><div id="reviewList"></div><div style="font-size:12px;color:var(--t2);text-align:center;margin:6px 0">分享你的使用体验</div><div style="display:flex;gap:4px;justify-content:center;margin:4px 0" id="starInput"><span class="star-input" onclick="setRating(1)">&#9733;</span><span class="star-input" onclick="setRating(2)">&#9733;</span><span class="star-input" onclick="setRating(3)">&#9733;</span><span class="star-input" onclick="setRating(4)">&#9733;</span><span class="star-input" onclick="setRating(5)">&#9733;</span></div><input id="reviewInput" placeholder="写一段评价…" style="width:100%;padding:8px 10px;border:1px solid var(--b);border-radius:6px;font-size:13px;outline:none;margin:4px 0"><button class="btn btn-sm btn-p btn-block" onclick="submitReview()">发布评价</button><div style="text-align:center;margin:8px 0;font-size:12px;color:var(--t2)">以上服务由第三方提供，平台不承担任何责任</div></div></div></div><div class="page" id="pagePoster">
 <div class="card"><div class="card-header">&#128444; AI 寻宠海报工坊</div><div class="card-body">
 <div class="poster-grid">
 <div class="poster-tpl active" onclick="selectTpl(this,0)"><div class="preview">&#128062;</div><div class="name">经典寻宠</div><div class="desc">A4 尺寸，适合打印张贴</div></div>
@@ -242,7 +303,7 @@ body{background:var(--bg);color:var(--t);min-height:100vh;padding-bottom:0;overf
 </div></div></div>
 <div class="modal-overlay" id="payModal"><div class="modal"><h2 id="payTitle">&#128142; 选择套餐</h2>
 <div id="payDetail"></div>
-<div class="pay-area"><div class="big-price" id="payPrice">&#165;99</div><p style="font-size:13px;color:var(--t2)">请支付宝账号 <b>hezhong_z@aliyun.com</b> 转账</p></div>
+<div class="pay-area"><div class="big-price" id="payPrice">&#165;99</div><p style="font-size:13px;color:var(--t2)">请添加微信 <b>MoreRoadSafety</b> 转账</p></div>
 <p style="font-size:11px;color:var(--t2);text-align:center">转账后发送截图，即刻开通</p>
 <button class="close-btn" id="payBtn" onclick="closePay()">确定</button></div></div>
 <div class="toast" id="toast"></div>
@@ -387,6 +448,51 @@ document.addEventListener("click",function(e){var card=e.target.closest(".pet-ca
 // Iter 7: Region picker
 var cities={"浙江省":["杭州市","宁波市","温州市","嘉兴市","湖州市","绍兴市","金华市","台州市"],"江苏省":["南京市","苏州市","无锡市","常州市","南通市","扬州市"],"上海市":["黄浦区","静安区","徐汇区","长宁区","浦东新区"],"北京市":["朝阳区","海淀区","东城区","西城区","丰台区","通州区"],"广东省":["广州市","深圳市","珠海市","佛山市","东莞市","惠州市"],"福建省":["福州市","厦门市","泉州市","漳州市","莆田市"]};
 function updateCities(){var p=document.getElementById("rProv").value;var cs=cities[p]||[];var sel=document.getElementById("rCity");sel.innerHTML="";cs.forEach(function(c){sel.innerHTML+="<option>"+c+"</option>"})}
+
+// === Iteration 16-20: Stories, Experience, Volunteer, Pro Services ===
+var stories=[{name:"朱朱",type:"cat",city:"温州",time:"不到 24 小时",story:"我家朱朱在小区门口跑丢的，当时心都碎了。立刻在宠寻发布了信息，AI 匹配很快提醒有人在邻区看到相似的猫。跑过去一看，果然是它！感谢平台和热心的邻居。",tip:"一定要立即发布，十分钟都不能耽误！",likes:45},{name:"小黑",type:"dog",city:"杭州",time:"3-7 天",story:"小黑是在公园散步时受惊跑丢的。志愿者们组织了搜索队，分区域线下寻找。第三天接到电话说在附近小区发现了。儿子和小黑拥抱的那一刻，我哭了。",tip:"不要只等待，主动出击找人帮忙！",likes:32},{name:"乐乐",type:"cat",city:"上海",time:"1-3 天",story:"乐乐从窗户跑出去了，我们在小区里找了一整天都没找到。后来在宠寻发布信息，第二天就有人联系我说在小区地下庥听到猫叫。原来它跑到地下室去了。",tip:"仔细检查地下室、车库这些容易忽略的地方",likes:28},{name:"豆豆",type:"dog",city:"深圳",time:"超过 2 周",story:"豆豆跑丢后我们找了整整 15 天。每天晚上都出去找，张贴了数百张海报。最后是一个收养站的好心人看到海报联系了我。大家千万不要放弃！",tip:"海报一定要多张贴，特别是附近的收养站、宠物医院",likes:56}];
+var storyForm=false;
+function showStoryForm(){var m=document.getElementById("storyModal");if(m)m.style.display="flex"}
+function closeStoryForm(){var m=document.getElementById("storyModal");if(m)m.style.display="none"}
+function submitStory(){var name=(document.getElementById("sName")||{}).value||"未命名";var city=(document.getElementById("sCity")||{}).value||"未知";var story=(document.getElementById("sStory")||{}).value||"";var tip=(document.getElementById("sTip")||{}).value||"";if(!story){showToast("请填写你的故事");return}var type=(document.getElementById("sType")||{}).value||"cat";var time=(document.getElementById("sTime")||{}).textContent||"不到 24 小时";stories.unshift({name:name,type:type,city:city,time:time,story:story,tip:tip,likes:0});closeStoryForm();renderStories();showToast("故事已发布！")}
+function renderStories(){var filter=(document.getElementById("storyFilter")||{}).value||"all";var html="";var filtered=stories;if(filter!=="all")filtered=stories.filter(function(s){return s.type===filter});if(filtered.length===0){html="<div class='empty-state'><div class='icon'>&#127775;</div><h3>暂无故事</h3><p>第一个分享你的故事吧</p></div>"}filtered.forEach(function(s){var icons={cat:"&#128049;",dog:"&#128054;",other:"&#128057;"};html+="<div class='story-card'><div class='top'><div class='savatar'>"+icons[s.type]+"</div><div class='sinfo'><h4>"+s.name+" <span style='font-size:11px;color:var(--t2);font-weight:400'>"+s.city+" • "+s.time+"</span></h4><div class='tags'><span>"+s.type+"</span></div><div class='sexcerpt'>"+s.story.slice(0,80)+"</div><div class='smeta'>&#128147; "+s.likes+" 人感动</div></div></div></div>"});document.getElementById("storyList").innerHTML=html}
+var articles=[{cat:"prevent",title:"5 个简单措施预防宠物走失",excerpt:"关好门窗、配戴项圈、植入芯片…这些简单的习惯能大幅降低宠物走失的风险。",body:"关好门窗是最基本的预防措施，尤其是猫主人。配戴项圈和联系方式牌，植入宠物芯片是最终保障。建议每个宠物主人都应该做到这三点。"},
+{cat:"search",title:"寻宠的黄金 72 小时法则",excerpt:"宠物走失后的 72 小时是找回的黄金时间，每一步都很关键。",body:"第一时间发布寻宠信息，立即搜索附近地区，通知每一个可能看到的人。利用社交媒体扩散，张贴海报，联系附近宠物医院。"},
+{cat:"experience",title:"我是怎样在 3 天内找回走失的猫的",excerpt:"一位猫主人的真实经历，分享她的寻猫过程和心得。",body:"第一天在小区内搜索，第二天扩大范围并张贴海报，第三天通过社区志愿者联系找回。关键是不要放弃，而且要动员周围的人帮忙。"},
+{cat:"safety",title:"宠物出行安全指南",excerpt:"带宠物出门时的安全规范，遯免意外发生。",body:"始终使用牵引绳，在安全的环境下释放。注意交通安全、其他动物和可能的吃了有害的东西。建议配戴急救联系方式。"}];
+var currentArticleCat="all";
+function filterArticles(cat,btn){currentArticleCat=cat;document.querySelectorAll("#pageExperience .pill").forEach(function(p){p.classList.remove("active")});if(btn)btn.classList.add("active");renderArticles()}
+function renderArticles(){var html="";var filtered=articles;if(currentArticleCat!=="all")filtered=articles.filter(function(a){return a.cat===currentArticleCat});filtered.forEach(function(a){var cats={prevent:"预防走失",search:"搜索技巧",experience:"找回经验",safety:"宠物安全"};html+="<div class='article-card' onclick='showArticle(\""+a.title+"\",\""+a.body+"\")'><div class='cat'>"+cats[a.cat]+"</div><h4>"+a.title+"</h4><p>"+a.excerpt+"</p></div>"});document.getElementById("articleList").innerHTML=html}
+function showArticle(title,body){showToast(title.slice(0,20)+"...")}
+function showVolForm(){var name=prompt("请输入你的姓名");if(name)showToast(name+"，感谢加入志愿者队伍！")}
+var proServices=[{name:"专业搜救狗队　杏林搜救",price:"¥500起",desc:"经验丰富的搜救狗队，覆盖杭州全市，24小时响应",tags:["搜救狗","杭州","24h"]},{name:"无人机空中搜索　天翁科技",price:"¥800起",desc:"利用热成像无人机进行空中搜索，适合广域范围搜索",tags:["无人机","热成像","广域"]},{name:"地面搜索队　寻宠助手",price:"¥300起",desc:"经验丰富的地面搜索团队，熟悉城区地形，配备专业设备",tags:["地面搜索","专业设备"]},{name:"宠物侦探　王工侦探社",price:"¥2000起",desc:"专业宠物侦探，7x24小时服务，全国范围",tags:["宠物侦探","全国","24h"]}];
+function renderProServices(){var html="";proServices.forEach(function(s){html+="<div class='pro-card'><div class='ptop'><h4>"+s.name+"</h4><div class='pprice'>"+s.price+"</div></div><div class='pdesc'>"+s.desc+"</div><div class='ptags'>";s.tags.forEach(function(t){html+="<span>"+t+"</span>"});html+="</div><button class='btn btn-sm btn-o' style='margin-top:4px' onclick='showToast(\"请添加微信 MoreRoadSafety 咨询服务\")'>请求服务</button></div>"});document.getElementById("proList").innerHTML=html}
+renderStories();renderArticles();renderProServices();
+
+// === Advanced Features: Charts, Chat, Reviews, Health ===
+var rating=0;var reviews=[{user:"张三",avatar:"&#128100;",stars:5,text:"搜救狗队非常专业，到场 20 分钟就找到了线索，感谢！",date:"2026-06-15"}];
+function drawCharts(){var lc=document.getElementById("lineChart");if(lc){var ctx=lc.getContext("2d");var w=lc.width=lc.clientWidth*2;var h=lc.height=140*2;ctx.scale(2,2);ctx.clearRect(0,0,w/2,h/2);var data=[12,19,8,15,22,10,24];var days=["周一","周二","周三","周四","周五","周六","周日"];var pw=w/2-20,ph=h/2-30,px=35,py=10;ctx.strokeStyle="#e2e8f0";ctx.lineWidth=1;for(var i=0;i<=4;i++){var y=py+i*(ph/4);ctx.beginPath();ctx.moveTo(px,y);ctx.lineTo(px+pw,y);ctx.stroke();ctx.fillStyle="#94a3b8";ctx.font="8px sans-serif";ctx.fillText((4-i)*8+"",2,y+3)}ctx.strokeStyle="#ff6b35";ctx.lineWidth=2.5;ctx.beginPath();data.forEach(function(d,i){var x=px+i*(pw/(data.length-1));var y=py+ph-(d/32*ph);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});ctx.stroke();ctx.fillStyle="#ff6b35";data.forEach(function(d,i){var x=px+i*(pw/(data.length-1));var y=py+ph-(d/32*ph);ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill()});ctx.fillStyle="#94a3b8";ctx.font="8px sans-serif";ctx.textAlign="center";days.forEach(function(d,i){ctx.fillText(d,px+i*(pw/(data.length-1)),py+ph+12)})}
+var dc=document.getElementById("donutChart");if(dc){var ctx2=dc.getContext("2d");var w2=dc.width=dc.clientWidth*2;var h2=dc.height=140*2;ctx2.scale(2,2);ctx2.clearRect(0,0,w2/2,h2/2);var cx=w2/4,cy=h2/4,r=Math.min(w2/4,h2/4)-15;var data2=[45,30,25];var colors=["#ff6b35","#6366f1","#10b981"];var labels2=["猫 45%","狗 30%","其他 25%"];var total=data2.reduce(function(a,b){return a+b},0);var start=0;data2.forEach(function(d,i){var a=(d/total)*Math.PI*2;ctx2.beginPath();ctx2.moveTo(cx,cy);ctx2.arc(cx,cy,r,start,start+a);ctx2.closePath();ctx2.fillStyle=colors[i];ctx2.fill();start+=a});ctx2.fillStyle="#fff";ctx2.beginPath();ctx2.arc(cx,cy,r*0.5,0,Math.PI*2);ctx2.fill();ctx2.fillStyle="#1e293b";ctx2.font="10px sans-serif";ctx2.textAlign="center";ctx2.fillText("宠物",cx,cy-3);ctx2.fillText("类型",cx,cy+8);labels2.forEach(function(l,i){ctx2.fillStyle=colors[i];ctx2.fillRect(w2/4+5,25+i*16,8,8);ctx2.fillStyle="#1e293b";ctx2.font="9px sans-serif";ctx2.textAlign="left";ctx2.fillText(l,w2/4+16,33+i*16)})}
+var bc=document.getElementById("barChart");if(bc){var ctx3=bc.getContext("2d");var w3=bc.width=bc.clientWidth*2;var h3=bc.height=120*2;ctx3.scale(2,2);ctx3.clearRect(0,0,w3/2,h3/2);var bdata=[55,62,48,70,65,78];var bmonths=["1月","2月","3月","4月","5月","6月"];var bpw=w3/2-30,bph=h3/2-25,bpx=30,bpy=5;ctx3.strokeStyle="#e2e8f0";ctx3.lineWidth=1;for(var i=0;i<=4;i++){var by=bpy+i*(bph/4);ctx3.beginPath();ctx3.moveTo(bpx,by);ctx3.lineTo(bpx+bpw,by);ctx3.stroke();ctx3.fillStyle="#94a3b8";ctx3.font="8px sans-serif";ctx3.fillText((4-i)*25+"%",2,by+3)}var bw=bpw/bdata.length-4;bdata.forEach(function(d,i){var bx=bpx+i*(bpw/bdata.length)+2;var bh=(d/100)*bph;ctx3.fillStyle="#ff6b35";ctx3.beginPath();ctx3.roundRect?ctx3.roundRect(bx,bpy+bph-bh,bw,bh,3):ctx3.rect(bx,bpy+bph-bh,bw,bh);ctx3.fill();ctx3.fillStyle="#94a3b8";ctx3.font="8px sans-serif";ctx3.textAlign="center";ctx3.fillText(bmonths[i],bx+bw/2,bpy+bph+10)})}setTimeout(drawCharts,100);}drawCharts();
+var conversations=[{id:0,name:"小黑搜索队（4人）",avatar:"&#128054;",last:"我立刻过去！",time:"2分钟前",msgs:[{text:"有人在光明路看到了一只黄色狗",dir:"in",time:"10:32"},{text:"确定是小黑吗？我立刻过去！",dir:"out",time:"10:33"}]},{id:1,name:"志愿者交流群",avatar:"&#128101;",last:"已安排了下午的搜索",time:"15分钟前",msgs:[{text:"明天上午有没有人可以参加搜索？",dir:"in",time:"昨天"},{text:"我可以！上午 9 点到",dir:"out",time:"昨天"}]},{id:2,name:"宠物医院联盟",avatar:"&#127973;",last:"您好，有人送来了一只猫",time:"1小时前",msgs:[{text:"您好，有人送来了一只橘猫，您要来确认吗？",dir:"in",time:"14:00"}]}];
+var activeConv=0;
+function renderConvs(){var html="";conversations.forEach(function(c,i){html+="<div class='conv-item "+(i===activeConv?"active":"")+"' onclick='switchConv("+i+")'><div class='cav'>"+c.avatar+"</div><div class='cinfo'><div class='cname'>"+c.name+"</div><div class='cmsg'>"+c.last+"</div></div><div class='ctime'>"+c.time+"</div></div>"});document.getElementById("convList").innerHTML=html}
+function switchConv(i){activeConv=i;renderConvs();renderMsgs();document.getElementById("convTitle").textContent=conversations[i].name}
+function renderMsgs(){var conv=conversations[activeConv];if(!conv)return;var html="";conv.msgs.forEach(function(m){html+="<div class='msg "+m.dir+"'>"+m.text+"<span class='mtime'>"+m.time+"</span></div>"});document.getElementById("msgArea").innerHTML=html;document.getElementById("msgArea").scrollTop=document.getElementById("msgArea").scrollHeight}
+function sendMsg(){var inp=document.getElementById("chatInput")||document.querySelector(".chat-input-bar input");if(!inp)return;var t=inp.value.trim();if(!t)return;conversations[activeConv].msgs.push({text:t,dir:"out",time:new Date().getHours()+":"+String(new Date().getMinutes()).padStart(2,"0")});inp.value="";renderMsgs()}
+renderConvs();renderMsgs();
+function renderReviews(){var html="";reviews.forEach(function(r){html+="<div class='review-card'><div class='ruser'><span class='rav'>"+r.avatar+"</span>"+r.user+"</div><div class='rstars'>"+("★".repeat(r.stars))+"</div><div class='rtext'>"+r.text+"</div><div class='rdate'>"+r.date+"</div></div>"});document.getElementById("reviewList").innerHTML=html}
+function setRating(n){rating=n;document.querySelectorAll(".star-input").forEach(function(s,i){s.classList.toggle("active",i<n)})}
+function submitReview(){var text=(document.getElementById("reviewInput")||{}).value||"";if(!text||rating===0){showToast("请选择星级和填写评价");return}reviews.unshift({user:"我",avatar:"&#128100;",stars:rating,text:text,date:new Date().toISOString().slice(0,10)});renderReviews();document.getElementById("reviewInput").value="";showToast("评价已发布")}
+renderReviews();
+
+// === PWA Install Prompt ===
+var deferredPrompt=null;
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();deferredPrompt=e;document.getElementById("installBanner").style.display="block"});
+function installApp(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;document.getElementById("installBanner").style.display="none"})}
+window.addEventListener("appinstalled",function(){document.getElementById("installBanner").style.display="none";showToast("宠寻已安装到你的设备")});
+// Register SW
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/find-pet/sw.js")})}
 </script><input type="file" id="photoInput" accept="image/*" multiple style="display:none" onchange="handlePhotos(this)">
 <div class="modal-overlay" id="galleryModal"><div class="modal" style="max-width:500px"><div id="galleryContent" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:8px 0"></div><button class="close-btn" onclick="document.getElementById('galleryModal').classList.remove('show')">关闭</button></div></div>
 <!-- PWA Ready - Can be added to home screen -->
